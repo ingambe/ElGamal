@@ -1,4 +1,4 @@
-from Elgamal import *
+from Tools import *
 
-if __main__:
-    alice = Elgmal()
+if __name__== "__main__":
+    print(generateBigPrimeNumber())

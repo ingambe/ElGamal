@@ -1,33 +1,49 @@
 from random import randint
+from math import ceil, sqrt
 
-# return an odd number between 2**16 and 2**31
 def generateBigOddNumber():
+    '''
+    A big odd number generator
+    :return: an odd number between 2**16 and 2**31
+    '''
     return (2 * randint(2 ** 16, 2 ** 31)) + 1
 
-
-# return a big prime number (2**16 < x < 2**32)
 def generateBigPrimeNumber():
+    '''
+    A big prime number generator
+    :return: a big prime number (2**16 < x < 2**32)
+    '''
     big_odd_number = generateBigOddNumber()
     while not (is_prime(big_odd_number)):
         big_odd_number = generateBigOddNumber()
     return big_odd_number
 
 
-# test the primality of a number
 def is_prime(x):
+    '''
+    Test the primality of a number
+    :param x: the number to test
+    :return: if x is prime or not
+    '''
     if x % 2 == 0:
         return False
-    # par pas de 2, evite de checker les nombres pair, on s'arretes a racine carree de x
-    # + 2 à cause de l'aroundie possiblement à l'inférieur
-    for i in range(3, round(sqrt(x)) + 2, 2):
+    # by steps of 2, avoid to check even number
+    # stop at square of x to avoid useless check, because k * i = n with i > sqrt(n) is impossible
+    # because it implies that k < sqrt(n) so it will have been already checked
+    for i in range(3, ceil(sqrt(x)), 2):
         if x % i == 0:
             return False
     return True
 
 
 def generateASmallerPrimeNumber(x):
+    '''
+    Generate a prime number smaller than x
+    :param x: a prime number
+    :return: a prime number smaller than x
+    '''
     # generate a number between 2 and x-1
-    startNumber = randint(2, x)
+    startNumber = randint(2, x - 1)
     # if we haven't generate 2 and startNumber is even, we change startNumber to an odd number
     if startNumber != 2 and startNumber % 2 == 0:
         startNumber -= 1
