@@ -16,7 +16,7 @@ class Elgamal:
         '''
         :return: publish your public key
         '''
-        return (self.q, self.g, self.h)
+        return self.q, self.g, self.h
 
     def cipher(self, pk, m):
         '''
@@ -31,22 +31,22 @@ class Elgamal:
         r = randint(1, q)
         c1 = (g ** r) % q
         y = (h ** r) % q
-        '''
-        cipher = ""
-        for character in m:
-            cipher = cipher + str(ord(character) * c2) + ","
-        '''
-        c2 = m * y
-        return (c1, c2)
+        if type(m) == str:
+            c2 = ""
+            for character in m:
+                c2 = c2 + str(ord(character) * y) + ","
+        else :
+            c2 = m * y
+        return c1, c2
 
     def unCipher(self, cipher):
         c1 = cipher[0]
-        cipher_text = cipher[1]
-        '''
-        result = ""
-        for character in cipher_text.split(','):
-            if character != '':
-                result = result + chr(int(int(character) / (c1 ** self.sk)))
-        '''
-        result = cipher_text / ((c1 ** self.sk) % self.q)
+        cipher = cipher[1]
+        if type(cipher) == str:
+            result = ""
+            for character in cipher.split(','):
+                if character != '':
+                 result = result + chr(int(int(character) / ((c1 ** self.sk) % self.q)))
+        else:
+            result = cipher / ((c1 ** self.sk) % self.q)
         return result
