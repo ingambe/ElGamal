@@ -40,6 +40,11 @@ class Elgamal:
         return c1, c2
 
     def unCipher(self, cipher):
+        '''
+        Decrypt the cipher
+        :param cipher: a tuple containing C1 (g**r mod q) from Bob and the cipher, which could be a str or a number
+        :return: the unencrypted message
+        '''
         c1 = cipher[0]
         cipher = cipher[1]
         if type(cipher) == str:
