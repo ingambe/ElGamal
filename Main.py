@@ -1,4 +1,6 @@
-from Tools import *
+from Elgamal import *
 
 if __name__== "__main__":
-    print(generateBigPrimeNumber())
+    alice = Elgamal()
+    bob = Elgamal()
+    print(alice.unCipher(bob.cipher(alice.publishPublicKey(), 123)))

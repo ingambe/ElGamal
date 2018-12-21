@@ -4,14 +4,14 @@ from math import ceil, sqrt
 def generateBigOddNumber():
     '''
     A big odd number generator
-    :return: an odd number between 2**16 and 2**31
+    :return: an odd number between 2**8 and 2**16
     '''
-    return (2 * randint(2 ** 16, 2 ** 31)) + 1
+    return (2 * randint(2 ** 8, 2 ** 16)) + 1
 
 def generateBigPrimeNumber():
     '''
     A big prime number generator
-    :return: a big prime number (2**16 < x < 2**32)
+    :return: a big prime number (2**8 < x < 2**16)
     '''
     big_odd_number = generateBigOddNumber()
     while not (is_prime(big_odd_number)):
