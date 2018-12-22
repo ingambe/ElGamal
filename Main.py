@@ -1,5 +1,19 @@
 from Elgamal import *
 
+def attackElGamal(public_key):
+    '''
+    Print the private key if she's founded
+    :param public_key: the public key tuple
+    '''
+    q = public_key[0]
+    g = public_key[1]
+    h = public_key[2]
+    for i in range(1, q):
+        if (g ** i) % q == h:
+            print("FOUND !")
+            print("Private key = {}".format(i))
+            return
+
 if __name__== "__main__":
     alice = Elgamal()
     bob = Elgamal()
