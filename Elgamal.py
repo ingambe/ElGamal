@@ -9,7 +9,8 @@ class Elgamal:
         '''
         self.q = generateBigPrimeNumber()
         self.g = generateASmallerPrimeNumber(self.q)
-        self.sk = randint(1, self.q)
+        # we choose a big secret key to prevent from the attack
+        self.sk = randint(2**4, self.q)
         self.h = (self.g ** self.sk) % self.q
 
     def publishPublicKey(self):

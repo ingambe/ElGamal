@@ -3,6 +3,7 @@ from Elgamal import *
 def attackElGamal(public_key):
     '''
     Print the private key if she's founded
+    Prove that it's important to choose a big random x to prevent attacks
     :param public_key: the public key tuple
     '''
     q = public_key[0]
