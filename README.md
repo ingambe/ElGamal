@@ -20,8 +20,12 @@ message = "Hello World !"
 bob = Elgamal()
 bob_cipher = bob.cipher(alice_public_key, message)
 ```
-
 ### Decryption
 ```    
 alice_decrypted = alice.unCipher(bob_cipher)
+```
+### Attack
+The problem of discrete logartihm is <a href="https://en.wikipedia.org/wiki/ElGamal_encryption">NP-Complete</a>, but if the random x picked is to small we can possibly guess the secret key in a reasonnable time. Worth give it a try !
+```    
+attackElGamal(public_key)
 ```
