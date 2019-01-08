@@ -37,7 +37,10 @@ class Elgamal:
             for character in m:
                 c2 = c2 + str(ord(character) * y) + ","
         else :
-            c2 = m * y
+            if m > q:
+                print("ERREUR : Message plus grand que l'ordre du groupe cyclique")
+            else:
+                c2 = m * y
         return c1, c2
 
     def unCipher(self, cipher):

@@ -1,5 +1,6 @@
 from Elgamal import *
 
+
 def attackElGamal(public_key):
     '''
     Print the private key if she's founded
@@ -15,27 +16,19 @@ def attackElGamal(public_key):
             print("Private key = {}".format(i))
             return
 
+
 if __name__== "__main__":
     alice = Elgamal()
     bob = Elgamal()
 
     # El Gamal for string
-    message = "Hello World !"
+    print("Integer")
+    message = 99999999999999999999999999999999999
+    print("Vous essayer de crypter {}".format(message))
     alice_public_key = alice.publishPublicKey()
+    print("la clef publique de alice : {}".format(alice_public_key))
+    print(alice_public_key)
     bob_cipher = bob.cipher(alice_public_key, message)
+    print("le crypte : {}".format(bob_cipher))
     alice_decrypted = alice.unCipher(bob_cipher)
-    print(alice_decrypted)
-
-    # El Gamal for integers
-    message = 42
-    alice_public_key = alice.publishPublicKey()
-    bob_cipher = bob.cipher(alice_public_key, message)
-    alice_decrypted = alice.unCipher(bob_cipher)
-    print(alice_decrypted)
-
-    # El Gamal for float
-    message = 124.58
-    alice_public_key = alice.publishPublicKey()
-    bob_cipher = bob.cipher(alice_public_key, message)
-    alice_decrypted = alice.unCipher(bob_cipher)
-    print(alice_decrypted)
+    print("le message decrypte {}".format(alice_decrypted))

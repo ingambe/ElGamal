@@ -1,12 +1,14 @@
 from random import randint
 from math import ceil, sqrt
 
+
 def generateBigOddNumber():
     '''
     A big odd number generator
     :return: an odd number between 2**8 and 2**16
     '''
     return (2 * randint(2 ** 8, 2 ** 16)) + 1
+
 
 def generateBigPrimeNumber():
     '''
