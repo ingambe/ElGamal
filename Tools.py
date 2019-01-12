@@ -5,9 +5,9 @@ from math import ceil, sqrt
 def generateBigOddNumber():
     '''
     A big odd number generator
-    :return: an odd number between 2**8 and 2**16
+    :return: an odd number between 2**6 and 2**8
     '''
-    return (2 * randint(2 ** 8, 2 ** 16)) + 1
+    return (2 * randint(2 ** 6, 2 ** 8)) + 1
 
 
 def generateBigPrimeNumber():

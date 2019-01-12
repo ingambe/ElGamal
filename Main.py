@@ -23,14 +23,19 @@ if __name__== "__main__":
 
     print(isAGenerator(6, 11))
 
-    # El Gamal for string
+    # El Gamal for integer
     print("Integer")
-    message = 99999999999999999999999999999999999
+    message = 55
     print("Vous essayer de crypter {}".format(message))
     alice_public_key = alice.publishPublicKey()
     print("la clef publique de alice : {}".format(alice_public_key))
+    print("l'ordre dy groupe cyclique est : {}".format(alice_public_key[0]))
     print(alice_public_key)
     bob_cipher = bob.cipher(alice_public_key, message)
     print("le crypte : {}".format(bob_cipher))
+    if quadraticResidual(bob_cipher[1], alice_public_key[0]):
+        print("c'est un residu quadratique")
+    else:
+        print("ce n'est pas un résidu quadratique")
     alice_decrypted = alice.unCipher(bob_cipher)
     print("le message decrypte {}".format(alice_decrypted))
