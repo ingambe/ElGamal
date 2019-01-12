@@ -36,9 +36,9 @@ class Elgamal:
             c2 = ""
             for character in m:
                 c2 = c2 + str(ord(character) * y) + ","
-        else :
+        else:
             if m > q:
-                print("ERREUR : Message plus grand que l'ordre du groupe cyclique")
+                c2 = -1
             else:
                 c2 = m * y
         return c1, c2
@@ -51,11 +51,15 @@ class Elgamal:
         '''
         c1 = cipher[0]
         cipher = cipher[1]
-        if type(cipher) == str:
-            result = ""
-            for character in cipher.split(','):
-                if character != '':
-                 result = result + chr(int(int(character) / ((c1 ** self.sk) % self.q)))
-        else:
-            result = cipher / ((c1 ** self.sk) % self.q)
+        if cipher == -1:
+            print("ERREUR : Message plus grand que l'ordre du groupe cyclique")
+            result = "ERROR"
+        else :
+            if type(cipher) == str:
+                result = ""
+                for character in cipher.split(','):
+                    if character != '':
+                     result = result + chr(int(int(character) / ((c1 ** self.sk) % self.q)))
+            else:
+                result = cipher / ((c1 ** self.sk) % self.q)
         return result

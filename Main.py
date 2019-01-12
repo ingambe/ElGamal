@@ -21,6 +21,8 @@ if __name__== "__main__":
     alice = Elgamal()
     bob = Elgamal()
 
+    print(isAGenerator(6, 11))
+
     # El Gamal for string
     print("Integer")
     message = 99999999999999999999999999999999999

@@ -52,3 +52,63 @@ def generateASmallerPrimeNumber(x):
     while not (is_prime(startNumber)) and startNumber > 2:
         startNumber -= 2
     return startNumber
+
+
+def isAGenerator(g, q):
+    '''
+    Test if a number is a generator of a given cyclic group
+    :param g: the generator
+    :param q: the cyclic group order
+    :return: if g is a generator of the cyclic groupe of q
+    '''
+    generated = [False for i in range(0, q)]
+    i = 1
+    while i < q:
+        number = (g**i) % q
+        if generated[number]:
+            return False
+        generated[number] = True
+        i += 1
+    return True
+
+def minMaxGenerator(q):
+    '''
+    Generate the minimal and maximal generator of a cyclic group q
+    :param q:
+    :return:
+    '''
+    minimum = 2
+    while not(isAGenerator(minimum, q)) and minimum < q:
+        minimum += 1
+    maximum = q - 1
+    while not(isAGenerator(maximum, q)) and maximum > 1:
+        maximum -= 1
+    return minimum, maximum
+
+
+def generateGenerator(q):
+    '''
+    Generate a generator of the cyclic group of order q
+    :param q: the order of the cyclic group
+    :return: a generator
+    '''
+    minimum, maximum = minMaxGenerator(q)
+    generator = randint(minimum, maximum)
+    upOrDown = randint(0, 1)
+    if upOrDown == 0:
+        while not(isAGenerator(generator, q)):
+            generator -= 1
+    else:
+        while not(isAGenerator(generator, q)):
+            generator += 1
+    return generator
+
+
+def quadraticResidual(a, q):
+    '''
+    Check if a number is a quadratic residual
+    :param a: the number to test
+    :param q: the order of the cyclic group
+    :return: if a is a quadratic residual
+    '''
+    return (a*a) % q == 1
