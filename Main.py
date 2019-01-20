@@ -25,7 +25,7 @@ if __name__== "__main__":
 
     # El Gamal for integer
     print("Integer")
-    message = 55
+    message = 5
     alice_public_key = alice.publishPublicKey()
     print("Vous essayer de crypter {}".format(message))
     if quadraticResidual(message, alice_public_key[0]):

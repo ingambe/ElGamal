@@ -7,10 +7,10 @@ class Elgamal:
         '''
         The initialisation of ElGamal's protocol, initialise our public and private key
         '''
-        self.q = generateBigPrimeNumber()
+        self.q = generateBigSafePrimeNumber()
         self.g = generateGenerator(self.q)
         # we choose a big secret key to prevent from the attack
-        self.sk = randint(2**4, self.q)
+        self.sk = randint(min(2**4, int(self.q/2)), self.q)
         self.h = (self.g ** self.sk) % self.q
 
     def publishPublicKey(self):

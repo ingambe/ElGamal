@@ -1,23 +1,23 @@
 from random import randint
-from math import ceil, sqrt
+from math import ceil, sqrt, gcd
 
 
 def generateBigOddNumber():
     '''
     A big odd number generator
-    :return: an odd number between 2**6 and 2**8
+    :return: an odd number between 2**8 and 2**11
     '''
-    return (2 * randint(2 ** 6, 2 ** 8)) + 1
+    return (2 * randint(2 ** 8, 2 ** 10)) + 1
 
 
-def generateBigPrimeNumber():
+def generateBigSafePrimeNumber():
     '''
-    A big prime number generator
-    :return: a big prime number (2**8 < x < 2**16)
+    A big safe prime number generator
+    :return: a big safe prime number (2**8 < x < 2**16)
     '''
     big_odd_number = generateBigOddNumber()
-    while not (is_prime(big_odd_number)):
-        big_odd_number = generateBigOddNumber()
+    while not (isSafePrime(big_odd_number)):
+        big_odd_number -= 2
     return big_odd_number
 
 
@@ -38,7 +38,7 @@ def is_prime(x):
     return True
 
 
-def generateASmallerPrimeNumber(x):
+def generateASmallerCoPrimeNumber(x, q):
     '''
     Generate a prime number smaller than x
     :param x: a prime number
@@ -96,10 +96,10 @@ def generateGenerator(q):
     generator = randint(minimum, maximum)
     upOrDown = randint(0, 1)
     if upOrDown == 0:
-        while not(isAGenerator(generator, q)):
+        while not(isAGenerator(generator, q)) or not coPrime(generator, q):
             generator -= 1
     else:
-        while not(isAGenerator(generator, q)):
+        while not(isAGenerator(generator, q)) or not coPrime(generator, q):
             generator += 1
     return generator
 
@@ -111,4 +111,15 @@ def quadraticResidual(a, q):
     :param q: the order of the cyclic group
     :return: if a is a quadratic residual
     '''
-    return (a*a) % q == 1
+    for i in range(1, q):
+        if a % q == (i ** 2) % q:
+            return True
+    return False
+
+
+def isSafePrime(q):
+    return is_prime(q) and is_prime((2 * q) + 1)
+
+
+def coPrime(p, q):
+    return gcd(p, q) == 1
