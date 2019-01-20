@@ -26,8 +26,12 @@ if __name__== "__main__":
     # El Gamal for integer
     print("Integer")
     message = 55
-    print("Vous essayer de crypter {}".format(message))
     alice_public_key = alice.publishPublicKey()
+    print("Vous essayer de crypter {}".format(message))
+    if quadraticResidual(message, alice_public_key[0]):
+        print("c'est un residu quadratique")
+    else:
+        print("ce n'est pas un résidu quadratique")
     print("la clef publique de alice : {}".format(alice_public_key))
     print("l'ordre dy groupe cyclique est : {}".format(alice_public_key[0]))
     print(alice_public_key)
