@@ -8,15 +8,15 @@ class Elgamal:
         The initialisation of ElGamal's protocol, initialise our public and private key
         '''
         self.q = generateBigSafePrimeNumber()
-        self.g = generateGenerator(self.q)
+        # todo verify it's a quadratic generator
+        self.g = generateQuadtraticGenerator(self.q)
         # we choose a big secret key to prevent from the attack
         self.sk = randint(min(2**4, int(self.q/2)), self.q)
         self.h = (self.g ** self.sk) % self.q
-        # set of quadratic residual
-        self.qr = []
+        self.residual = []
         for i in range(0, self.q):
             if quadraticResidual(i, self.q):
-                self.qr.append(i)
+                self.residual.append(i)
 
     def publishPublicKey(self):
         '''
@@ -37,23 +37,23 @@ class Elgamal:
         r = randint(1, q)
         c1 = (g ** r) % q
         y = (h ** r) % q
-        quadratic_residual = []
+        residual = []
         for i in range(0, q):
             if quadraticResidual(i, q):
-                quadratic_residual.append(i)
+                residual.append(i)
         if type(m) == str:
-            if m >= len(quadratic_residual):
+            if m > q / 2:
                 c2 = ""
             else:
-                m = quadratic_residual[m]
+                m = residual[m]
                 c2 = ""
                 for character in m:
                     c2 = c2 + str(ord(character) * y) + ","
         else:
-            if m >= len(quadratic_residual):
+            if m > q / 2:
                 c2 = -1
             else:
-                m = quadratic_residual[m]
+                m = residual[m]
                 c2 = m * y
         return c1, c2
 
@@ -76,5 +76,5 @@ class Elgamal:
                      result = result + chr(int(int(character) / ((c1 ** self.sk) % self.q)))
             else:
                 result = cipher / ((c1 ** self.sk) % self.q)
-        result = self.qr.index(result)
+                result = self.residual.index(result)
         return result

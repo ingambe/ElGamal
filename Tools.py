@@ -54,55 +54,32 @@ def generateASmallerCoPrimeNumber(x, q):
     return startNumber
 
 
-def isAGenerator(g, q):
+def generateQuadtraticGenerator(p):
     '''
-    Test if a number is a generator of a given cyclic group
-    :param g: the generator
-    :param q: the cyclic group order
-    :return: if g is a generator of the cyclic groupe of q
-    '''
-    generated = [False for i in range(0, q)]
-    i = 1
-    while i < q:
-        number = (g**i) % q
-        if generated[number]:
-            return False
-        generated[number] = True
-        i += 1
-    return True
-
-def minMaxGenerator(q):
-    '''
-    Generate the minimal and maximal generator of a cyclic group q
-    :param q:
-    :return:
-    '''
-    minimum = 2
-    while not(isAGenerator(minimum, q)) and minimum < q:
-        minimum += 1
-    maximum = q - 1
-    while not(isAGenerator(maximum, q)) and maximum > 1:
-        maximum -= 1
-    return minimum, maximum
-
-
-def generateGenerator(q):
-    '''
-    Generate a generator of the cyclic group of order q
+    Generate a quadratic residual generator of the cyclic group of order p (nammed Qp with p is safe prime) using the subgroup q
+    When the order of group is prime, all element are generator
+    x^2 mod order_of_groups is quadratic residual
     :param q: the order of the cyclic group
     :return: a generator
     '''
-    minimum, maximum = minMaxGenerator(q)
-    generator = randint(minimum, maximum)
-    upOrDown = randint(0, 1)
-    if upOrDown == 0:
-        while not(isAGenerator(generator, q)) or not coPrime(generator, q):
-            generator -= 1
-    else:
-        while not(isAGenerator(generator, q)) or not coPrime(generator, q):
-            generator += 1
+    q = int((p / 2) - 1)
+    generator = randint(2, min(2**4, q))
+    if not isSafePrime(p):
+        raise Exception("Safe prime needed")
+    generator = (generator ** 2) % p
+    if not quadraticResidual(generator, p):
+        raise Exception("Generator need to be a quadratic residual")
+    # test generator
+    residual_generated = [lambda i: (0 if not quadraticResidual(i, p) else 1) for i in range(0, p)]
+    for i in range(1, q):
+        tmp = (generator ** i) % p
+        if residual_generated[tmp] == 0:
+            raise Exception("Not a quadratic generator")
+        elif residual_generated[tmp] == 1:
+            residual_generated[tmp] = 2
+        elif residual_generated[tmp] == 2:
+            raise Exception("Not a cyclic group")
     return generator
-
 
 def quadraticResidual(a, q):
     '''
@@ -123,3 +100,39 @@ def isSafePrime(q):
 
 def coPrime(p, q):
     return gcd(p, q) == 1
+
+
+def TS(p, n):
+    import math
+    if (int(math.pow(n, (p - 1) / 2)) % p != 1):
+        return ("No solutions")
+    # find max power of 2 dividing p-1
+    s = 0
+    while ((p - 1) % math.pow(2, s) == 0):
+        s += 1
+    s -= 1
+    q = int((p - 1) / math.pow(2, s))  # p-1=q*2^s
+    # Select a z such that z is a quadratic non-residue modulo p
+    z = 1
+    res = int(math.pow(z, (p - 1) / 2)) % p
+    while (res != p - 1):
+        z += 1
+        res = math.pow(z, (p - 1) / 2) % p
+    c = int(math.pow(z, q)) % p
+    r = int(math.pow(n, (q + 1) / 2)) % p
+    t = int(math.pow(n, q)) % p
+    m = s
+    while (t % p != 1):
+        i = 0
+        div = False
+        while (div == False):
+            i += 1
+            t = int(math.pow(t, 2)) % p
+            if (t % p == 1):
+                div = True
+        b = int(math.pow(c, int(math.pow(2, m - i - 1)))) % p
+        r = (r * b) % p
+        t = t * (b ** 2) % p
+        c = (b ** 2) % p
+        m = i
+    return r
