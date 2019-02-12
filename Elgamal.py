@@ -8,7 +8,6 @@ class Elgamal:
         The initialisation of ElGamal's protocol, initialise our public and private key
         '''
         self.q = generateBigSafePrimeNumber()
-        # todo verify it's a quadratic generator
         self.g = generateQuadtraticGenerator(self.q)
         # we choose a big secret key to prevent from the attack
         self.sk = randint(min(2**4, int(self.q/2)), self.q)
@@ -43,7 +42,7 @@ class Elgamal:
                 residual.append(i)
         if type(m) == str:
             if m > q / 2:
-                c2 = ""
+                raise Exception("Message too big for the ordrer of the group")
             else:
                 m = residual[m]
                 c2 = ""
@@ -51,7 +50,7 @@ class Elgamal:
                     c2 = c2 + str(ord(character) * y) + ","
         else:
             if m > q / 2:
-                c2 = -1
+                raise Exception("Message too big for the ordrer of the group")
             else:
                 m = residual[m]
                 c2 = m * y

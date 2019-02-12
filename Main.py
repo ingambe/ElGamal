@@ -22,9 +22,6 @@ if __name__== "__main__":
     bob = Elgamal()
 
     # El Gamal for integer
-
-    # TODO VERIFY GENERATOR
-
     print("Integer")
     message = 5
     alice_public_key = alice.publishPublicKey()
