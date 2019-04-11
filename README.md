@@ -29,3 +29,4 @@ The problem of discrete logartihm is <a href="https://en.wikipedia.org/wiki/ElGa
 ```    
 attackElGamal(public_key)
 ```
+This implementaton is protected against Quadratic Residual attacks.
